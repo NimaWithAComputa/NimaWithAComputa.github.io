@@ -1,598 +1,123 @@
-:root {
-  --paper: #EAF7F0;
-  --ink: #201B3D;
-  --card: #FFFFFF;
-  --coral: #FF6F59;
-  --yellow: #FFC857;
-  --sky: #4CC9F0;
-  --line: #201B3D;
-  --max-width: 680px;
-}
+// ------------------------------------------------------------
+// Page transitions: pan-and-stretch between tabs.
+// Direction is based on left-to-right tab order, so clicking a
+// tab further right pans/stretches left, and clicking one further
+// left pans/stretches right — like the page is being pulled off
+// in the direction you came from.
+// ------------------------------------------------------------
+(function () {
+  const PAGE_ORDER = ['index.html', 'career.html', 'personal.html', 'contact.html'];
+  const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EXIT_MS = 380;
 
-* { box-sizing: border-box; }
+  const pageEl = document.querySelector('.page');
+  if (!pageEl) return;
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  function fileName(pathname) {
+    const parts = pathname.split('/').filter(Boolean);
+    const last = parts[parts.length - 1];
+    return last && last.length ? last : 'index.html';
   }
-}
 
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: 'Inter', sans-serif;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.1;
-  margin: 0;
-}
-
-/* ---------- Hero ---------- */
-
-.hero {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 4.5rem 1.5rem 3rem;
-  text-align: center;
-}
-
-.sticker {
-  display: inline-block;
-  font-family: 'Kalam', cursive;
-  font-size: 0.95rem;
-  background: var(--yellow);
-  color: var(--ink);
-  padding: 0.35rem 0.9rem;
-  border: 2px solid var(--ink);
-  border-radius: 999px;
-  transform: rotate(-3deg);
-  margin-bottom: 1.5rem;
-}
-
-.hero h1 {
-  font-size: clamp(2.2rem, 6vw, 3.2rem);
-  font-weight: 700;
-}
-
-.highlight {
-  position: relative;
-  white-space: nowrap;
-}
-
-.highlight::after {
-  content: "";
-  position: absolute;
-  left: -2%;
-  right: -2%;
-  bottom: 0.08em;
-  height: 0.32em;
-  background: var(--coral);
-  z-index: -1;
-  transform: rotate(-1deg);
-  opacity: 0.55;
-}
-
-.tagline {
-  font-size: 1.05rem;
-  max-width: 46ch;
-  margin: 1.2rem auto 0;
-  color: var(--ink);
-}
-
-.hero-actions {
-  display: flex;
-  gap: 0.9rem;
-  justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.btn {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding: 0.7rem 1.3rem;
-  border-radius: 10px;
-  border: 2px solid var(--ink);
-  background: var(--sky);
-  color: var(--ink);
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.btn:active {
-  transform: translate(0, 0);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-.btn-ghost {
-  background: transparent;
-  box-shadow: none;
-}
-
-.btn-ghost:hover {
-  box-shadow: none;
-  background: rgba(32, 27, 61, 0.06);
-}
-
-/* ---------- Timeline ---------- */
-
-.timeline {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 1rem 1.5rem 4rem;
-  position: relative;
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 1.9rem;
-  width: 3px;
-  background: var(--ink);
-  opacity: 0.15;
-}
-
-.entry {
-  position: relative;
-  padding-left: 3.6rem;
-  margin-bottom: 2.4rem;
-}
-
-.dot {
-  position: absolute;
-  left: 1.15rem;
-  top: 0.4rem;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 3px solid var(--ink);
-  background: var(--paper);
-}
-
-.entry[data-tag="work"] .dot { background: var(--sky); }
-.entry[data-tag="life"] .dot { background: var(--coral); }
-.entry[data-tag="win"] .dot { background: var(--yellow); }
-
-.card {
-  background: var(--card);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  padding: 1.3rem 1.4rem;
-  box-shadow: 4px 4px 0 var(--ink);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.entry:nth-child(odd) .card { transform: rotate(-0.6deg); }
-.entry:nth-child(even) .card { transform: rotate(0.6deg); }
-
-.card:hover {
-  transform: rotate(0deg) translateY(-2px);
-  box-shadow: 6px 6px 0 var(--ink);
-}
-
-.card.pulse {
-  animation: pulse 0.6s ease;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 111, 89, 0.6); }
-  100% { box-shadow: 6px 6px 0 var(--ink); }
-}
-
-.chip {
-  display: inline-block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  background: var(--paper);
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
-  padding: 0.15rem 0.6rem;
-  margin-bottom: 0.6rem;
-}
-
-time {
-  display: block;
-  font-family: 'Kalam', cursive;
-  font-size: 0.95rem;
-  opacity: 0.75;
-  margin-bottom: 0.3rem;
-}
-
-.card h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 0.98rem;
-}
-
-/* ---------- Footer ---------- */
-
-.footer {
-  text-align: center;
-  padding: 3rem 1.5rem 4rem;
-  border-top: 2px dashed rgba(32, 27, 61, 0.25);
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.links {
-  display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  margin: 0.8rem 0 1.5rem;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-}
-
-.links a {
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 2px solid var(--coral);
-}
-
-.links a:hover {
-  color: var(--coral);
-}
-
-.fine-print {
-  font-size: 0.85rem;
-  opacity: 0.6;
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 480px) {
-  .timeline::before { left: 1.4rem; }
-  .dot { left: 0.65rem; }
-  .entry { padding-left: 2.8rem; }
-}
-
-/* ==========================================================
-   SITE NAV
-========================================================== */
-
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  padding: 1rem 1.5rem;
-  background: var(--paper);
-  border-bottom: 2px dashed rgba(32, 27, 61, 0.25);
-}
-
-.nav-tab {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--ink);
-  text-decoration: none;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  border: 2px solid transparent;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-
-.nav-tab:hover {
-  background: rgba(32, 27, 61, 0.06);
-}
-
-.nav-tab.active {
-  border-color: var(--ink);
-  background: var(--card);
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-/* ==========================================================
-   YEAR NAV (horizontal, above the vertical timeline)
-========================================================== */
-
-.year-nav-wrap {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.year-nav {
-  display: flex;
-  gap: 0.7rem;
-  overflow-x: auto;
-  padding-bottom: 1.5rem;
-  scrollbar-width: thin;
-}
-
-.year-pill {
-  flex: 0 0 auto;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  background: var(--card);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 999px;
-  padding: 0.45rem 1.1rem;
-  cursor: pointer;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-
-.year-pill:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-.year-pill.active {
-  background: var(--yellow);
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-/* offset so a jumped-to entry isn't hidden under the sticky nav */
-.entry {
-  scroll-margin-top: 5.5rem;
-}
-
-/* ==========================================================
-   SHARED SUB-PAGE LAYOUT (career / personal / contact)
-========================================================== */
-
-.page-header {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 3.5rem 1.5rem 1rem;
-  text-align: center;
-}
-
-.page-header h1 {
-  font-size: clamp(2rem, 5vw, 2.6rem);
-  margin-top: 1rem;
-}
-
-.sticker-sky { background: var(--sky); }
-.sticker-coral { background: var(--coral); color: #fff; }
-.sticker-yellow { background: var(--yellow); }
-
-.page-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem 4rem;
-}
-
-/* ---------- Career page ---------- */
-
-.role {
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  background: var(--card);
-  box-shadow: 4px 4px 0 var(--ink);
-  padding: 1.3rem 1.4rem;
-  margin-bottom: 1.6rem;
-}
-
-.role-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.role-head h2 {
-  font-size: 1.2rem;
-}
-
-.role-head time {
-  font-family: 'Kalam', cursive;
-  opacity: 0.75;
-  white-space: nowrap;
-}
-
-.role-company {
-  font-weight: 600;
-  margin: 0.2rem 0 0.8rem;
-  opacity: 0.85;
-}
-
-.role-points {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-.role-points li {
-  margin-bottom: 0.4rem;
-}
-
-.skills-section {
-  margin-top: 2.5rem;
-}
-
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1rem;
-}
-
-.tag-cloud .chip {
-  margin-bottom: 0;
-}
-
-/* ---------- Personal page ---------- */
-
-.now-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-.now-card {
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  background: var(--card);
-  box-shadow: 3px 3px 0 var(--ink);
-  padding: 1rem;
-  text-align: center;
-}
-
-.now-card p {
-  margin: 0.6rem 0 0;
-  font-weight: 600;
-}
-
-.hobbies-section h2 {
-  margin-bottom: 1rem;
-}
-
-.hobby {
-  border-left: 3px solid var(--coral);
-  padding-left: 1rem;
-  margin-bottom: 1.4rem;
-}
-
-.hobby h3 {
-  font-family: 'Space Grotesk', sans-serif;
-  margin: 0 0 0.3rem;
-  font-size: 1.05rem;
-}
-
-.hobby p {
-  margin: 0;
-}
-
-/* ---------- Contact page ---------- */
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.contact-card {
-  display: block;
-  text-decoration: none;
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  background: var(--card);
-  box-shadow: 4px 4px 0 var(--ink);
-  padding: 1.3rem 1rem;
-  text-align: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.contact-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0 var(--ink);
-}
-
-.contact-card p {
-  margin: 0.6rem 0 0;
-  font-weight: 600;
-  word-break: break-word;
-}
-
-.contact-note {
-  text-align: center;
-  opacity: 0.8;
-}
-
-/* ---------- Mobile: sub-page grids stack ---------- */
-
-@media (max-width: 600px) {
-  .now-grid,
-  .contact-grid {
-    grid-template-columns: 1fr;
+  function pageIndex(name) {
+    const i = PAGE_ORDER.indexOf(name);
+    return i === -1 ? 0 : i;
   }
-}
 
-/* ==========================================================
-   PAGE TRANSITIONS
-   The .page wrapper (just inside <body>) is what animates when
-   navigating between home / career / personal / contact.
-   Direction is decided in script.js based on tab order, so
-   moving "forward" (e.g. home -> career) pans left, and moving
-   "backward" (e.g. contact -> home) pans right.
-========================================================== */
-
-html, body {
-  overflow-x: hidden;
-}
-
-.page {
-  will-change: transform, opacity;
-}
-
-@keyframes page-in-from-right {
-  from { transform: translateX(6%) skewX(6deg) scaleX(1.25); opacity: 0; }
-  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-}
-
-@keyframes page-in-from-left {
-  from { transform: translateX(-6%) skewX(-6deg) scaleX(1.25); opacity: 0; }
-  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-}
-
-@keyframes page-out-to-left {
-  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-  to   { transform: translateX(-35%) skewX(-8deg) scaleX(1.6); opacity: 0; }
-}
-
-@keyframes page-out-to-right {
-  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-  to   { transform: translateX(35%) skewX(8deg) scaleX(1.6); opacity: 0; }
-}
-
-.page-anim-in-right {
-  transform-origin: left center;
-  animation: page-in-from-right 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
-}
-
-.page-anim-in-left {
-  transform-origin: right center;
-  animation: page-in-from-left 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
-}
-
-.page-anim-out-left {
-  transform-origin: right center;
-  animation: page-out-to-left 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
-}
-
-.page-anim-out-right {
-  transform-origin: left center;
-  animation: page-out-to-right 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-anim-in-right,
-  .page-anim-in-left,
-  .page-anim-out-left,
-  .page-anim-out-right {
-    animation: none;
+  // Entrance animation, based on where the visitor came from.
+  if (!REDUCE_MOTION && document.referrer) {
+    try {
+      const refUrl = new URL(document.referrer);
+      if (refUrl.origin === window.location.origin) {
+        const fromIndex = pageIndex(fileName(refUrl.pathname));
+        const toIndex = pageIndex(fileName(window.location.pathname));
+        if (fromIndex !== toIndex) {
+          pageEl.classList.add(toIndex > fromIndex ? 'page-anim-in-right' : 'page-anim-in-left');
+        }
+      }
+    } catch (err) {
+      // malformed or unavailable referrer — just skip the entrance animation
+    }
   }
+
+  // Exit animation when clicking a nav tab to another page.
+  document.querySelectorAll('.nav-tab').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      if (link.classList.contains('active')) return;
+
+      const href = link.getAttribute('href');
+      if (!href || /^https?:\/\//i.test(href)) return;
+
+      e.preventDefault();
+
+      if (REDUCE_MOTION) {
+        window.location.href = href;
+        return;
+      }
+
+      const fromIndex = pageIndex(fileName(window.location.pathname));
+      const toIndex = pageIndex(fileName(href));
+      pageEl.classList.add(toIndex > fromIndex ? 'page-anim-out-left' : 'page-anim-out-right');
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, EXIT_MS);
+    });
+  });
+})();
+
+// Picks a random entry on the timeline, scrolls to it, and gives it a
+// little pulse so it feels found rather than just jumped to.
+const surpriseBtn = document.getElementById('surprise-btn');
+const entries = document.querySelectorAll('.entry');
+
+if (surpriseBtn && entries.length) {
+  surpriseBtn.addEventListener('click', () => {
+    const pick = entries[Math.floor(Math.random() * entries.length)];
+    pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const card = pick.querySelector('.card');
+    card.classList.remove('pulse');
+    // restart animation even if the same card gets picked twice in a row
+    void card.offsetWidth;
+    card.classList.add('pulse');
+  });
+}
+
+// ------------------------------------------------------------
+// Horizontal year nav: click a year pill to jump to the first
+// entry from that year, and highlight whichever year is
+// currently in view as the person scrolls the timeline by hand.
+// ------------------------------------------------------------
+const yearPills = document.querySelectorAll('.year-pill');
+
+if (yearPills.length && entries.length) {
+  yearPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const year = pill.dataset.year;
+      const target = document.querySelector(`.entry[data-year="${year}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const setActivePill = (year) => {
+    yearPills.forEach((pill) => {
+      pill.classList.toggle('active', pill.dataset.year === year);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (observedEntries) => {
+      observedEntries.forEach((observed) => {
+        if (observed.isIntersecting) {
+          setActivePill(observed.target.dataset.year);
+        }
+      });
+    },
+    { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+  );
+
+  entries.forEach((entry) => observer.observe(entry));
 }
