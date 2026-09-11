@@ -530,3 +530,69 @@ time {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================
+   PAGE TRANSITIONS
+   The .page wrapper (just inside <body>) is what animates when
+   navigating between home / career / personal / contact.
+   Direction is decided in script.js based on tab order, so
+   moving "forward" (e.g. home -> career) pans left, and moving
+   "backward" (e.g. contact -> home) pans right.
+========================================================== */
+
+html, body {
+  overflow-x: hidden;
+}
+
+.page {
+  will-change: transform, opacity;
+}
+
+@keyframes page-in-from-right {
+  from { transform: translateX(6%) skewX(6deg) scaleX(1.25); opacity: 0; }
+  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
+}
+
+@keyframes page-in-from-left {
+  from { transform: translateX(-6%) skewX(-6deg) scaleX(1.25); opacity: 0; }
+  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
+}
+
+@keyframes page-out-to-left {
+  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
+  to   { transform: translateX(-35%) skewX(-8deg) scaleX(1.6); opacity: 0; }
+}
+
+@keyframes page-out-to-right {
+  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
+  to   { transform: translateX(35%) skewX(8deg) scaleX(1.6); opacity: 0; }
+}
+
+.page-anim-in-right {
+  transform-origin: left center;
+  animation: page-in-from-right 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
+}
+
+.page-anim-in-left {
+  transform-origin: right center;
+  animation: page-in-from-left 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
+}
+
+.page-anim-out-left {
+  transform-origin: right center;
+  animation: page-out-to-left 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
+}
+
+.page-anim-out-right {
+  transform-origin: left center;
+  animation: page-out-to-right 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-anim-in-right,
+  .page-anim-in-left,
+  .page-anim-out-left,
+  .page-anim-out-right {
+    animation: none;
+  }
+}
