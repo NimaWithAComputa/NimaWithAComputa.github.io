@@ -267,3 +267,266 @@ time {
   .dot { left: 0.65rem; }
   .entry { padding-left: 2.8rem; }
 }
+
+/* ==========================================================
+   SITE NAV
+========================================================== */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  background: var(--paper);
+  border-bottom: 2px dashed rgba(32, 27, 61, 0.25);
+}
+
+.nav-tab {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.nav-tab:hover {
+  background: rgba(32, 27, 61, 0.06);
+}
+
+.nav-tab.active {
+  border-color: var(--ink);
+  background: var(--card);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ==========================================================
+   YEAR NAV (horizontal, above the vertical timeline)
+========================================================== */
+
+.year-nav-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.year-nav {
+  display: flex;
+  gap: 0.7rem;
+  overflow-x: auto;
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin;
+}
+
+.year-pill {
+  flex: 0 0 auto;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  background: var(--card);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.year-pill:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.year-pill.active {
+  background: var(--yellow);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* offset so a jumped-to entry isn't hidden under the sticky nav */
+.entry {
+  scroll-margin-top: 5.5rem;
+}
+
+/* ==========================================================
+   SHARED SUB-PAGE LAYOUT (career / personal / contact)
+========================================================== */
+
+.page-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 1rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  margin-top: 1rem;
+}
+
+.sticker-sky { background: var(--sky); }
+.sticker-coral { background: var(--coral); color: #fff; }
+.sticker-yellow { background: var(--yellow); }
+
+.page-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+}
+
+/* ---------- Career page ---------- */
+
+.role {
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 1.3rem 1.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.role-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.role-head h2 {
+  font-size: 1.2rem;
+}
+
+.role-head time {
+  font-family: 'Kalam', cursive;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.role-company {
+  font-weight: 600;
+  margin: 0.2rem 0 0.8rem;
+  opacity: 0.85;
+}
+
+.role-points {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.role-points li {
+  margin-bottom: 0.4rem;
+}
+
+.skills-section {
+  margin-top: 2.5rem;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.tag-cloud .chip {
+  margin-bottom: 0;
+}
+
+/* ---------- Personal page ---------- */
+
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.now-card {
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 1rem;
+  text-align: center;
+}
+
+.now-card p {
+  margin: 0.6rem 0 0;
+  font-weight: 600;
+}
+
+.hobbies-section h2 {
+  margin-bottom: 1rem;
+}
+
+.hobby {
+  border-left: 3px solid var(--coral);
+  padding-left: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.hobby h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+}
+
+.hobby p {
+  margin: 0;
+}
+
+/* ---------- Contact page ---------- */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.contact-card {
+  display: block;
+  text-decoration: none;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 1.3rem 1rem;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.contact-card p {
+  margin: 0.6rem 0 0;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.contact-note {
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* ---------- Mobile: sub-page grids stack ---------- */
+
+@media (max-width: 600px) {
+  .now-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
