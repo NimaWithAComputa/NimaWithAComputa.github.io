@@ -533,66 +533,39 @@ time {
 
 /* ==========================================================
    PAGE TRANSITIONS
-   The .page wrapper (just inside <body>) is what animates when
-   navigating between home / career / personal / contact.
-   Direction is decided in script.js based on tab order, so
-   moving "forward" (e.g. home -> career) pans left, and moving
-   "backward" (e.g. contact -> home) pans right.
+   A fixed black overlay sits above everything (see the
+   #transition-overlay div right after <body>). It grows from
+   a thin horizontal line into full coverage when leaving a
+   page, and shrinks back into a line and disappears when a
+   new page arrives — like a screen wiping to black and back.
 ========================================================== */
 
-html, body {
-  overflow-x: hidden;
+#transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: #05040a;
+  transform: scaleY(0);
+  transform-origin: center;
+  z-index: 9999;
+  pointer-events: none;
 }
 
-.page {
-  will-change: transform, opacity;
+/* Applied instantly (no transition) by the inline snippet at the
+   top of <body>, before first paint, so an incoming page starts
+   fully covered rather than flashing its real content first. */
+#transition-overlay.is-covering {
+  transform: scaleY(1);
 }
 
-@keyframes page-in-from-right {
-  from { transform: translateX(6%) skewX(6deg) scaleX(1.25); opacity: 0; }
-  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
+/* Added a frame later to animate the cover away, revealing the page. */
+#transition-overlay.is-revealing {
+  transition: transform 0.42s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: scaleY(0);
 }
 
-@keyframes page-in-from-left {
-  from { transform: translateX(-6%) skewX(-6deg) scaleX(1.25); opacity: 0; }
-  to   { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-}
-
-@keyframes page-out-to-left {
-  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-  to   { transform: translateX(-35%) skewX(-8deg) scaleX(1.6); opacity: 0; }
-}
-
-@keyframes page-out-to-right {
-  from { transform: translateX(0) skewX(0deg) scaleX(1); opacity: 1; }
-  to   { transform: translateX(35%) skewX(8deg) scaleX(1.6); opacity: 0; }
-}
-
-.page-anim-in-right {
-  transform-origin: left center;
-  animation: page-in-from-right 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
-}
-
-.page-anim-in-left {
-  transform-origin: right center;
-  animation: page-in-from-left 0.45s cubic-bezier(0.22, 0.68, 0.35, 1) both;
-}
-
-.page-anim-out-left {
-  transform-origin: right center;
-  animation: page-out-to-left 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
-}
-
-.page-anim-out-right {
-  transform-origin: left center;
-  animation: page-out-to-right 0.38s cubic-bezier(0.55, 0, 0.85, 0.35) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-anim-in-right,
-  .page-anim-in-left,
-  .page-anim-out-left,
-  .page-anim-out-right {
-    animation: none;
-  }
+/* Added on nav-tab click, growing the line into full coverage
+   before the actual navigation happens. */
+#transition-overlay.is-hiding {
+  transition: transform 0.38s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: scaleY(1);
 }
