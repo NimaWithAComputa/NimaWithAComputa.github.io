@@ -15,3 +15,41 @@ if (surpriseBtn && entries.length) {
     card.classList.add('pulse');
   });
 }
+
+// ------------------------------------------------------------
+// Horizontal year nav: click a year pill to jump to the first
+// entry from that year, and highlight whichever year is
+// currently in view as the person scrolls the timeline by hand.
+// ------------------------------------------------------------
+const yearPills = document.querySelectorAll('.year-pill');
+
+if (yearPills.length && entries.length) {
+  yearPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const year = pill.dataset.year;
+      const target = document.querySelector(`.entry[data-year="${year}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const setActivePill = (year) => {
+    yearPills.forEach((pill) => {
+      pill.classList.toggle('active', pill.dataset.year === year);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (observedEntries) => {
+      observedEntries.forEach((observed) => {
+        if (observed.isIntersecting) {
+          setActivePill(observed.target.dataset.year);
+        }
+      });
+    },
+    { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+  );
+
+  entries.forEach((entry) => observer.observe(entry));
+}
