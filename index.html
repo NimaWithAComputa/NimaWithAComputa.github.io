@@ -12,17 +12,26 @@
 <body>
 
   <!-- ======================================================
+       SITE NAV — same block goes at the top of every page.
+       Just change which link has class="nav-tab active".
+  ======================================================= -->
+  <nav class="site-nav">
+    <a href="index.html" class="nav-tab active">home</a>
+    <a href="career.html" class="nav-tab">career</a>
+    <a href="personal.html" class="nav-tab">personal</a>
+    <a href="contact.html" class="nav-tab">contact</a>
+  </nav>
+
+  <!-- ======================================================
        HEADER
        Swap "Your Name" and the tagline below for your own.
-       The rotated sticker text is a little status note —
-       change it whenever the mood strikes.
   ======================================================= -->
   <header class="hero">
     <span class="sticker">currently: fixing this website at 1am</span>
     <h1>Hi, I'm <span class="highlight">Your Name</span>.</h1>
     <p class="tagline">This is where I dump the stuff that happens to me —
       the shipped projects, the small wins, the "learned this the hard way" moments.
-      Work and life, same timeline, no separate tabs.</p>
+      Work and life, same timeline, no separate tabs... except the tabs up top. Those are for the deep dives.</p>
     <div class="hero-actions">
       <button id="surprise-btn" class="btn">🎲 Surprise me</button>
       <a href="#timeline" class="btn btn-ghost">See the timeline ↓</a>
@@ -30,14 +39,27 @@
   </header>
 
   <!-- ======================================================
+       YEAR NAV
+       One pill per year that appears in the timeline below.
+       Add a new pill (with matching data-year) whenever you
+       start a new year of entries.
+  ======================================================= -->
+  <div class="year-nav-wrap">
+    <div class="year-nav" id="year-nav">
+      <button class="year-pill" data-year="2026">2026</button>
+      <button class="year-pill" data-year="2025">2025</button>
+    </div>
+  </div>
+
+  <!-- ======================================================
        TIMELINE
-       Each .entry is one moment. Give it a data-tag of
-       "work", "life", or "win" — that controls the chip color.
+       Each .entry needs a data-tag ("work" / "life" / "win")
+       AND a data-year matching one of the pills above.
        Copy/paste an .entry block to add more; newest at top.
   ======================================================= -->
   <main id="timeline" class="timeline">
 
-    <div class="entry" data-tag="win">
+    <div class="entry" data-tag="win" data-year="2026">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🏆 win</span>
@@ -48,7 +70,7 @@
       </div>
     </div>
 
-    <div class="entry" data-tag="life">
+    <div class="entry" data-tag="life" data-year="2026">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🌱 life</span>
@@ -59,7 +81,7 @@
       </div>
     </div>
 
-    <div class="entry" data-tag="work">
+    <div class="entry" data-tag="work" data-year="2026">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🎯 work</span>
@@ -70,7 +92,7 @@
       </div>
     </div>
 
-    <div class="entry" data-tag="life">
+    <div class="entry" data-tag="life" data-year="2026">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🌱 life</span>
@@ -81,7 +103,7 @@
       </div>
     </div>
 
-    <div class="entry" data-tag="work">
+    <div class="entry" data-tag="work" data-year="2026">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🎯 work</span>
@@ -92,7 +114,7 @@
       </div>
     </div>
 
-    <div class="entry" data-tag="win">
+    <div class="entry" data-tag="win" data-year="2025">
       <div class="dot"></div>
       <div class="card">
         <span class="chip">🏆 win</span>
