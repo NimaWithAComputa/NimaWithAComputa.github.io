@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<title>Career — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="transition-overlay"></div>
+<script>
+(function () {
+  try {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && sessionStorage.getItem('pt-nav') === '1') {
+      document.getElementById('transition-overlay').classList.add('is-covering');
+    } else {
+      sessionStorage.removeItem('pt-nav');
+    }
+  } catch (e) {}
+})();
+</script>
+<div class="page">
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-tab">home</a>
+    <a href="career.html" class="nav-tab active">career</a>
+    <a href="personal.html" class="nav-tab">personal</a>
+    <a href="gallery.html" class="nav-tab">gallery</a>
+    <a href="garage.html" class="nav-tab">garage</a>
+    <a href="contact.html" class="nav-tab">contact</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+  </nav>
+
+  <header class="page-header">
+    <span class="sticker sticker-sky">the professional stuff</span>
+    <h1>Career</h1>
+    <p class="tagline">Roles, projects, and skills — the resume version,
+      but with fewer bullet points pretending everything was a strategic decision.</p>
+  </header>
+
+  <!-- ======================================================
+       ROLE LIST
+       Copy/paste a .role block for each job or project.
+       Newest at top.
+  ======================================================= -->
+  <main class="page-content">
+
+    <div class="role">
+      <div class="role-head">
+        <h2>Job Title</h2>
+        <time>2025 — Present</time>
+      </div>
+      <p class="role-company">Company Name</p>
+      <ul class="role-points">
+        <li>What you actually did, in plain language.</li>
+        <li>A result or number if you have one.</li>
+        <li>Something you learned that changed how you work.</li>
+      </ul>
+      <!-- Example of linking a role to a full write-up. Duplicate
+           posts/example-project.html for each project worth expanding on. -->
+      <a class="read-more" href="posts/example-project.html">Read the full story →</a>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <h2>Previous Job Title</h2>
+        <time>2023 — 2025</time>
+      </div>
+      <p class="role-company">Previous Company</p>
+      <ul class="role-points">
+        <li>What you actually did, in plain language.</li>
+        <li>A result or number if you have one.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <h2>First Job / Internship</h2>
+        <time>2021 — 2023</time>
+      </div>
+      <p class="role-company">Where it started</p>
+      <ul class="role-points">
+        <li>What you actually did, in plain language.</li>
+      </ul>
+    </div>
+
+    <!-- ======================================================
+         SKILLS
+         Just a flat list of tag chips — add or remove freely.
+    ======================================================= -->
+    <section class="skills-section">
+      <h2>Things I'm good at</h2>
+      <div class="tag-cloud">
+        <span class="chip">Skill One</span>
+        <span class="chip">Skill Two</span>
+        <span class="chip">Skill Three</span>
+        <span class="chip">Skill Four</span>
+        <span class="chip">Skill Five</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Say hi:</p>
+    <div class="links">
+      <a href="mailto:you@example.com">email</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">github</a>
+      <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener">linkedin</a>
+    </div>
+    <p class="fine-print">built by hand, hosted on GitHub Pages</p>
+  </footer>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

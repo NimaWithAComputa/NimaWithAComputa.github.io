@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<title>Gallery — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="transition-overlay"></div>
+<script>
+(function () {
+  try {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && sessionStorage.getItem('pt-nav') === '1') {
+      document.getElementById('transition-overlay').classList.add('is-covering');
+    } else {
+      sessionStorage.removeItem('pt-nav');
+    }
+  } catch (e) {}
+})();
+</script>
+<div class="page">
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-tab">home</a>
+    <a href="career.html" class="nav-tab">career</a>
+    <a href="personal.html" class="nav-tab">personal</a>
+    <a href="gallery.html" class="nav-tab active">gallery</a>
+    <a href="garage.html" class="nav-tab">garage</a>
+    <a href="contact.html" class="nav-tab">contact</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+  </nav>
+
+  <header class="page-header">
+    <span class="sticker sticker-sky">stuff worth looking at</span>
+    <h1>Gallery</h1>
+    <p class="tagline">Photos and clips, unranked and mostly unfiltered.
+      Click anything to open it bigger.</p>
+  </header>
+
+  <main class="page-content">
+
+    <!-- ======================================================
+         PHOTOS
+         Each .gallery-item currently holds a dashed placeholder —
+         replace the whole <div class="placeholder-fill">...</div>
+         with:  <img src="images/gallery/your-file.jpg" alt="...">
+         Keep the .gallery-caption span if you want a caption to
+         show on hover; delete it if you don't.
+         Add or remove .gallery-item blocks freely — the lightbox
+         and grid pick up however many are on the page.
+    ======================================================= -->
+    <section>
+      <div class="section-heading">
+        <h2>📷 Photos</h2>
+        <p>Upload your images to an <code>images/gallery/</code> folder and swap
+          them in below.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-01.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-02.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-03.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-04.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-05.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+        <div class="gallery-item">
+          <div class="placeholder-fill">
+            <span class="ph-icon">🖼️</span>
+            <span>photo-06.jpg</span>
+          </div>
+          <span class="gallery-caption">Add a one-line caption here</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         VIDEOS
+         Two patterns are supported — pick whichever fits each video:
+
+         1) Hosted elsewhere (YouTube, Vimeo, etc.) — add the embed
+            URL as data-embed on the .video-item:
+              <div class="video-item" data-embed="https://www.youtube.com/embed/VIDEO_ID">
+
+         2) A video file sitting in your own images/videos folder —
+            add it as data-video instead:
+              <div class="video-item" data-video="images/videos/your-clip.mp4">
+
+         Either way, swap the placeholder thumbnail <div> for a real
+         poster image the same way you would a gallery photo.
+    ======================================================= -->
+    <section>
+      <div class="section-heading">
+        <h2>🎬 Videos</h2>
+        <p>Clicking a card opens it in the lightbox and starts playback.</p>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-item" data-embed="https://www.youtube.com/embed/YOUR_VIDEO_ID">
+          <div class="placeholder-fill" style="height:100%;">
+            <span class="ph-icon">▶️</span>
+            <span>youtube-clip.mp4</span>
+          </div>
+          <div class="play-badge"><span>▶</span></div>
+          <span class="video-caption">Example: a YouTube embed</span>
+        </div>
+        <div class="video-item" data-video="images/videos/your-clip.mp4">
+          <div class="placeholder-fill" style="height:100%;">
+            <span class="ph-icon">▶️</span>
+            <span>local-clip.mp4</span>
+          </div>
+          <div class="play-badge"><span>▶</span></div>
+          <span class="video-caption">Example: a self-hosted file</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Say hi:</p>
+    <div class="links">
+      <a href="mailto:you@example.com">email</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">github</a>
+      <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener">linkedin</a>
+    </div>
+    <p class="fine-print">built by hand, hosted on GitHub Pages</p>
+  </footer>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

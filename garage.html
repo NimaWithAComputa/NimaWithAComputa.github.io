@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<title>Garage — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="transition-overlay"></div>
+<script>
+(function () {
+  try {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && sessionStorage.getItem('pt-nav') === '1') {
+      document.getElementById('transition-overlay').classList.add('is-covering');
+    } else {
+      sessionStorage.removeItem('pt-nav');
+    }
+  } catch (e) {}
+})();
+</script>
+<div class="page">
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-tab">home</a>
+    <a href="career.html" class="nav-tab">career</a>
+    <a href="personal.html" class="nav-tab">personal</a>
+    <a href="gallery.html" class="nav-tab">gallery</a>
+    <a href="garage.html" class="nav-tab active">garage</a>
+    <a href="contact.html" class="nav-tab">contact</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+  </nav>
+
+  <header class="page-header">
+    <span class="sticker sticker-coral">the garage</span>
+    <h1>Garage</h1>
+    <p class="tagline">Cars I've owned, wrenched on, or completely
+      ruined my weekend over. One card per car, newest at top.</p>
+  </header>
+
+  <!-- ======================================================
+       CAR CARDS
+       Copy/paste a .car-card block for each car. The photo div
+       is a placeholder — replace its contents with:
+         <img src="images/garage/your-car.jpg" alt="...">
+       "Read the build story" links out to a full write-up in
+       /posts/ — see posts/first-car.html for the template, or
+       just delete the link if a card doesn't need one.
+  ======================================================= -->
+  <main class="page-content">
+
+    <div class="car-card">
+      <div class="car-photo">
+        <div class="placeholder-fill" style="height:100%;">
+          <span class="ph-icon">🚗</span>
+          <span>car-01.jpg</span>
+        </div>
+      </div>
+      <div class="car-body">
+        <div class="car-head">
+          <h2>Car Name / Nickname</h2>
+          <time>2024 — Present</time>
+        </div>
+        <p class="car-sub">Year · Make · Model</p>
+        <p>A couple sentences on how you got it, what it's like to live
+          with, and whatever you've done to it so far.</p>
+        <a class="read-more" href="posts/first-car.html">Read the build story →</a>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-photo">
+        <div class="placeholder-fill" style="height:100%;">
+          <span class="ph-icon">🚗</span>
+          <span>car-02.jpg</span>
+        </div>
+      </div>
+      <div class="car-body">
+        <div class="car-head">
+          <h2>Previous Car</h2>
+          <time>2021 — 2024</time>
+        </div>
+        <p class="car-sub">Year · Make · Model</p>
+        <p>What it taught you, why you sold it, or the one story about it
+          that always comes up.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Say hi:</p>
+    <div class="links">
+      <a href="mailto:you@example.com">email</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">github</a>
+      <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener">linkedin</a>
+    </div>
+    <p class="fine-print">built by hand, hosted on GitHub Pages</p>
+  </footer>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<title>Car Name / Nickname — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div id="transition-overlay"></div>
+<script>
+(function () {
+  try {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && sessionStorage.getItem('pt-nav') === '1') {
+      document.getElementById('transition-overlay').classList.add('is-covering');
+    } else {
+      sessionStorage.removeItem('pt-nav');
+    }
+  } catch (e) {}
+})();
+</script>
+<div class="page">
+
+  <nav class="site-nav">
+    <a href="../index.html" class="nav-tab">home</a>
+    <a href="../career.html" class="nav-tab">career</a>
+    <a href="../personal.html" class="nav-tab">personal</a>
+    <a href="../gallery.html" class="nav-tab">gallery</a>
+    <a href="../garage.html" class="nav-tab active">garage</a>
+    <a href="../contact.html" class="nav-tab">contact</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+  </nav>
+
+  <a class="back-link" href="../garage.html">← back to garage</a>
+
+  <!-- ======================================================
+       Template for a full car build/ownership story, linked
+       from a .car-card on garage.html. Duplicate this file
+       per car and swap the placeholder cover + inline images
+       for real photos:
+         <img src="../images/garage/your-photo.jpg" alt="...">
+  ======================================================= -->
+  <header class="post-hero">
+    <div class="post-cover">
+      <div class="placeholder-fill" style="height:100%;">
+        <span class="ph-icon">🚗</span>
+        <span>cover.jpg</span>
+      </div>
+    </div>
+    <p class="post-meta">2024 — Present · Year · Make · Model</p>
+    <h1>Car Name / Nickname</h1>
+  </header>
+
+  <article class="post-body">
+    <p>How you found it — the listing, the test drive, the moment you
+      knew you were buying it whether or not it was a good idea.</p>
+
+    <h2>First impressions</h2>
+    <p>What it was like to actually live with day one. The good
+      surprises, the "oh no" surprises, what needed fixing immediately.</p>
+
+    <!-- Drop in photos as you go — each one gets its own paragraph
+         of context above or below it. -->
+    <div class="placeholder-fill" style="aspect-ratio:16/9; border:2px solid var(--ink); border-radius:12px; margin:0.5rem 0 1.5rem;">
+      <span class="ph-icon">🖼️</span>
+      <span>garage-day-one.jpg</span>
+    </div>
+
+    <h2>What's changed</h2>
+    <p>Mods, repairs, maintenance milestones — whatever counts as
+      "progress" on this particular car. Include the mistakes; they're
+      usually the best part of the story.</p>
+
+    <h2>Where it's at now</h2>
+    <p>Current state, what's next on the list, and whether you'd do it
+      all again.</p>
+  </article>
+
+</div>
+<script src="../script.js"></script>
+</body>
+</html>

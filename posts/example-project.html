@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<title>Shipped the thing I was scared of — Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div id="transition-overlay"></div>
+<script>
+(function () {
+  try {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && sessionStorage.getItem('pt-nav') === '1') {
+      document.getElementById('transition-overlay').classList.add('is-covering');
+    } else {
+      sessionStorage.removeItem('pt-nav');
+    }
+  } catch (e) {}
+})();
+</script>
+<div class="page">
+
+  <nav class="site-nav">
+    <a href="../index.html" class="nav-tab">home</a>
+    <a href="../career.html" class="nav-tab active">career</a>
+    <a href="../personal.html" class="nav-tab">personal</a>
+    <a href="../gallery.html" class="nav-tab">gallery</a>
+    <a href="../garage.html" class="nav-tab">garage</a>
+    <a href="../contact.html" class="nav-tab">contact</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+  </nav>
+
+  <a class="back-link" href="../career.html">← back to career</a>
+
+  <!-- ======================================================
+       This is the template for a full write-up behind a
+       "Read the full story →" link on career.html. Duplicate
+       this file for each project, rename it, and link to it
+       from the matching .role block.
+
+       The cover image is a placeholder div below — swap it for:
+         <img src="../images/posts/your-cover.jpg" alt="...">
+  ======================================================= -->
+  <header class="post-hero">
+    <div class="post-cover">
+      <div class="placeholder-fill" style="height:100%;">
+        <span class="ph-icon">🖼️</span>
+        <span>cover.jpg</span>
+      </div>
+    </div>
+    <p class="post-meta">September 2026 · work</p>
+    <h1>Shipped the thing I was scared of</h1>
+  </header>
+
+  <article class="post-body">
+    <p>Open with the one-paragraph version: what this project was, why it
+      mattered to you, and what "done" looked like. This is the part
+      someone reads even if they read nothing else.</p>
+
+    <h2>The problem</h2>
+    <p>What was broken, missing, or annoying enough that you decided to
+      build something about it. Specifics beat generalities — a real
+      number, a real complaint, a real moment where you thought "someone
+      should fix this."</p>
+
+    <h2>What you built</h2>
+    <p>Walk through the approach. It's fine to get a little technical
+      here if that's genuinely part of the story — this is the page for
+      it, unlike the one-line career card that links here.</p>
+
+    <h2>What actually happened</h2>
+    <p>Results, reactions, what shipped vs. what got cut, and what you'd
+      do differently next time. The honest version is always more
+      interesting than the highlight-reel version.</p>
+  </article>
+
+</div>
+<script src="../script.js"></script>
+</body>
+</html>
